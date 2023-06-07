@@ -1,0 +1,11 @@
+{
+  "name": "strtoreverse",
+  "version": "2.0.0",
+  "main": "npmPackage.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": ""
+}
