@@ -1,10 +1,3 @@
-// const http = require("node:http");
-
-// http.createServer((req,res)=>{
-//     res.write("hii")
-//     res.end()
-// }).listen(3000)
-
 const express= require('express');
 const app= express();
 
@@ -22,13 +15,22 @@ app.post('/api/users',(req,res)=>{
     return res.status(201).send({msg:"hlo from get api",users})
 })
 app.get('/api/users',(req,res)=>{
+    if(req.query.name){
+        let name = req.query.name;
+    let user = users.find(x=> x.name === name)
+    if(!user) return res.status(404).send({msg:"Not found"})
+    res.status(200).send({msg:"hlo from get api",user})
+    }
+    else{
     res.status(200).send({msg:"hlo from get api",users})
+    }
 })
 app.get('/api/users/:id',(req,res)=>{
     let user = users.find(x=> x.id === parseInt(req.params.id))
     if(!user) return res.status(404).send({msg:"Not found"})
     res.status(200).send({msg:"user found",user})
 })
+
 app.put('/api/users/:id',(req,res)=>{
 
     let id= req.params.id;
