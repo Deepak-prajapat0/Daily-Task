@@ -6,25 +6,34 @@ const app = express();
 app.use(express.json());
 // app.set('view engine',"pug");
 // app.set('views',"./")
+let users=[]
 
 
 app.post('/',(req,res)=>{
-    const schema = Joi.object({
-        username: Joi.string()
-            .alphanum()
-            .min(3)
-            .max(30)
-            .required(),  
-        birth_year: Joi.number()
-            .integer()
-            .min(1900)
-            .max(2013),
-    
+    const schema = Joi.object()
+    .keys({
+      name: Joi.string()
+        .min(3)
+        .max(10)
+        .required(),
+      age: Joi.number()
+        .integer()
+        .min(16)
+        .required()
     })
-        .valid('username', 'birth_year')
-
-        const valid = schema.validate({username:req.body.name,birth_year:req.body.birth})
-        return res.send(valid.error.details[0].message)
+  const data = {
+    name: req.body.name,
+    age: req.body.age
+  };
+  
+  const result = schema.validate(data);
+  if(result.error){
+      return res.status(400).send(result.error.details[0].message)
+  }
+  else{
+    users.push(data)
+        return res.status(201).send({msg:"No error found",data:users})
+  }
     })
 
 app.listen(3000)
