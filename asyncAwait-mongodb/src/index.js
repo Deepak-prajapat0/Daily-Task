@@ -1,8 +1,12 @@
 const express = require("express");
-const app= express();
+const app = express();
 const mongoose = require("mongoose");
+const routes = require('./router/routes')
 
-mongoose.connect("")
+app.use(express.json());
+app.use('/',routes)
+
+mongoose.connect("mongodb+srv://deepak-prajapat:vgyw5qKnzICsud2R@cluster0.qildr1s.mongodb.net/lecture")
 .then(()=>console.log("MongoDb is connected ..."))
 .catch((error)=>console.log("error",error))
 
